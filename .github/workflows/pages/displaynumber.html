@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display Number</title>
+<style>
+    /* 设置文本样式 */
+    .movingText {
+        font-size: 24px;
+        font-weight: bold;
+        position: absolute;
+        animation: moveText 5s linear infinite alternate;
+    }
+
+    /* 定义动画 */
+    @keyframes moveText {
+        0% {
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            transform: translate(-500%, -500%);
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- 在页面中添加显示文字的元素 -->
+<div id="textContainer"></div>
+
+<script>
+    // 获取文本容器
+    var textContainer = document.getElementById('textContainer');
+
+    // 创建颜色数组
+    var colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+
+    // 创建20个文本元素并随机放置在页面上
+    for (var i = 0; i < 200; i++) {
+        var textElement = document.createElement('div');
+        textElement.textContent = '方涛你好帅！';
+        textElement.className = 'movingText';
+        textElement.style.left = getRandomPosition(window.innerWidth) + 'px';
+        textElement.style.top = getRandomPosition(window.innerHeight) + 'px';
+        textElement.style.animationDirection = getRandomDirection();
+        textContainer.appendChild(textElement);
+    }
+
+    // 返回一个介于0和max之间的随机数
+    function getRandomPosition(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    // 返回随机的动画方向
+    function getRandomDirection() {
+        var directions = ['normal', 'reverse', 'alternate', 'alternate-reverse'];
+        return directions[Math.floor(Math.random() * directions.length)];
+    }
+
+    // 每隔1秒变换字体颜色
+    setInterval(function() {
+        // 获取所有文本元素
+        var movingTexts = document.getElementsByClassName('movingText');
+        // 循环遍历设置颜色
+        for (var i = 0; i < movingTexts.length; i++) {
+            // 获取下一个颜色
+            var color = colors[i % colors.length];
+            // 设置文本颜色
+            movingTexts[i].style.color = color;
+        }
+    }, 1000); // 1000毫秒 = 1秒
+</script>
+
+</body>
+</html>
